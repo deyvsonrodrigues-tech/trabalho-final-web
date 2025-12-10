@@ -1,0 +1,197 @@
+/* Variáveis CSS para cores principais */
+:root {
+    --cor-primaria: #ff6b9d;
+    --cor-secundaria: #6c63ff;
+    --cor-escura: #333;
+    --cor-clara: #fff9fb;
+}
+
+/* Estilos gerais */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--cor-clara);
+    padding-top: 76px; /* Para compensar a navbar fixa */
+}
+
+/* Cores personalizadas */
+.text-pink {
+    color: var(--cor-primaria) !important;
+}
+
+.bg-pink {
+    background-color: var(--cor-primaria) !important;
+}
+
+.btn-pink {
+    background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+    color: white;
+}
+
+.btn-pink:hover {
+    background-color: #e55a8a;
+    border-color: #e55a8a;
+    color: white;
+}
+
+.btn-outline-pink {
+    color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+}
+
+.btn-outline-pink:hover {
+    background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+    color: white;
+}
+
+/* Seção Hero */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') no-repeat center center;
+    background-size: cover;
+    min-height: calc(100vh - 76px);
+    display: flex;
+    align-items: center;
+}
+
+/* Cards de serviços */
+.service-card {
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.service-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Galeria */
+.galeria-img {
+    overflow: hidden;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.galeria-img:hover {
+    transform: scale(1.03);
+}
+
+.galeria-img img {
+    transition: transform 0.5s ease;
+}
+
+.galeria-img:hover img {
+    transform: scale(1.1);
+}
+
+/* Itens do carrinho */
+.cart-item {
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+.quantity-btn {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.quantity-input {
+    width: 50px;
+    text-align: center;
+    border-left: none;
+    border-right: none;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-section p {
+        font-size: 1.2rem;
+    }
+    
+    .service-card {
+        margin-bottom: 20px;
+    }
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Efeitos de hover para links da navbar */
+.nav-link {
+    position: relative;
+    transition: color 0.3s;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--cor-primaria);
+    transition: width 0.3s;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* Scroll suave */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Estilos para badges */
+.badge.bg-pink {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Estilos para seções */
+section {
+    padding: 80px 0;
+}
+
+section:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* Modal personalizado */
+.modal-header.bg-pink {
+    border-bottom: none;
+}
+
+.btn-close-white {
+    filter: brightness(0) invert(1);
+}
