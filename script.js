@@ -1,4 +1,4 @@
-// Dados dos serviços disponíveis
+
 const services = [
     {
         id: 1,
@@ -33,7 +33,7 @@ const services = [
         description: "Sessão de depilação a laser para eliminação definitiva dos pelos.",
         duration: "45 min",
         price: 200.00,
-        image: "https://images.unsplash.com/photo-1556228578-9c360e1d458d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        image: "https://images.unsplash.com/photo-1700760933941-3a06a28fbf47?auto=format&fit=crop&w=1200&q=80",
         category: "Depilação"
     },
     {
@@ -76,8 +76,7 @@ let cartModal, scheduleModal;
 // Formulário de agendamento
 const scheduleForm = document.getElementById('schedule-form');
 const clientName = document.getElementById('client-name');
-const clientPhone = document.getElementById('client-phone');
-const clientEmail = document.getElementById('client-email');
+// Variável clientPhone removida
 const scheduleDate = document.getElementById('schedule-date');
 const scheduleTime = document.getElementById('schedule-time');
 
@@ -207,9 +206,14 @@ function renderServices() {
                             <span class="badge bg-light text-dark"><i class="bi bi-clock"></i> ${service.duration}</span>
                             <span class="ms-2 fw-bold text-pink">${formatPrice(service.price)}</span>
                         </div>
-                        <button class="btn btn-pink btn-sm add-to-cart" data-id="${service.id}">
-                            <i class="bi bi-cart-plus"></i> Adicionar
-                        </button>
+                        <div class="d-flex flex-column align-items-end">
+                            <button class="btn btn-pink btn-sm add-to-cart mb-2" data-id="${service.id}">
+                                <i class="bi bi-cart-plus"></i> Adicionar
+                            </button>
+                            <a href="#" class="text-pink text-decoration-underline small go-to-cart" style="cursor: pointer;">
+                                Ir para o carrinho
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -223,6 +227,14 @@ function renderServices() {
         button.addEventListener('click', function() {
             const serviceId = parseInt(this.getAttribute('data-id'));
             addToCart(serviceId);
+        });
+    });
+
+    // NOVO: Adicionar eventos aos links "Ir para o carrinho"
+    document.querySelectorAll('.go-to-cart').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault(); // Impede o comportamento padrão do link
+            openCart(); // Chama a função que abre o modal do carrinho
         });
     });
 }
@@ -253,18 +265,20 @@ function addToCart(serviceId) {
     
     // Feedback visual
     const button = document.querySelector(`.add-to-cart[data-id="${serviceId}"]`);
-    const originalText = button.innerHTML;
-    const originalClass = button.className;
-    
-    button.innerHTML = '<i class="bi bi-check"></i> Adicionado';
-    button.disabled = true;
-    button.className = 'btn btn-success btn-sm';
-    
-    setTimeout(() => {
-        button.innerHTML = originalText;
-        button.disabled = false;
-        button.className = originalClass;
-    }, 1500);
+    if (button) {
+        const originalText = button.innerHTML;
+        const originalClass = button.className;
+        
+        button.innerHTML = '<i class="bi bi-check"></i> Adicionado';
+        button.disabled = true;
+        button.className = 'btn btn-success btn-sm';
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.disabled = false;
+            button.className = originalClass;
+        }, 1500);
+    }
     
     // Mostrar alerta
     showAlert(`"${service.name}" adicionado ao carrinho!`, 'success');
@@ -429,20 +443,8 @@ function sendToWhatsApp() {
         return;
     }
     
-    if (!clientPhone.value.trim()) {
-        showAlert('Por favor, informe seu telefone para contato.', 'warning');
-        clientPhone.focus();
-        return;
-    }
-    
-    // Validar formato do telefone (mínimo 10 dígitos)
-    const phoneDigits = clientPhone.value.replace(/\D/g, '');
-    if (phoneDigits.length < 10) {
-        showAlert('Por favor, informe um telefone válido com DDD.', 'warning');
-        clientPhone.focus();
-        return;
-    }
-    
+    // REMOVIDO: Validação de telefone
+
     if (!scheduleDate.value) {
         showAlert('Por favor, selecione uma data para o agendamento.', 'warning');
         return;
@@ -466,10 +468,7 @@ function sendToWhatsApp() {
     let message = `*AGENDAMENTO - ESTÉTICA BELLE* ✨\n\n`;
     message += `*📋 Dados do Cliente:*\n`;
     message += `• *Nome:* ${clientName.value.trim()}\n`;
-    message += `• *Telefone:* ${clientPhone.value.trim()}\n`;
-    if (clientEmail.value.trim()) {
-        message += `• *E-mail:* ${clientEmail.value.trim()}\n`;
-    }
+    // REMOVIDO: Linha de telefone e e-mail
     message += `• *Data:* ${formattedDate}\n`;
     message += `• *Horário:* ${scheduleTime.value}\n\n`;
     
@@ -486,10 +485,10 @@ function sendToWhatsApp() {
     });
     
     message += `*💰 VALOR TOTAL: ${formatPrice(totalPrice)}*\n\n`;
-    message += `⏰ *Observação:* Este é um agendamento solicitado através do site. Por favor, confirme a disponibilidade.`;
+    message += `⏰ *Observação:* Este é um agendamento solicitado através do site. Aguardo confirmação.`;
     
-    // Número do WhatsApp - SUBSTITUIR PELO NÚMERO REAL DA CLÍNICA
-    const phoneNumber = "5511999999999"; // ← ALTERE AQUI
+    // Número do WhatsApp 
+    const phoneNumber = "5538998551312";
     
     // Criar link do WhatsApp
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
